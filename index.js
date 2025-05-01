@@ -20,7 +20,6 @@ mongoose.connect(config.connectionString)
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Create Account
 app.post("/create-account", async (req, res) => {
@@ -141,7 +140,7 @@ app.get("/get-user", authenticateToken, async (req, res) => {
         return res.status(500).json({ error: true, message: error.message });
     }
 });
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // Routes to handle the image upload
 app.post("/image-upload", upload.single("image"), async (req, res) => {
     try {
